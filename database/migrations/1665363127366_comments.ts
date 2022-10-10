@@ -1,14 +1,14 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'posts'
+  protected tableName = 'comments'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('title')
-      table.string('description')
-      table.string('image')
+      table.string('username')
+      table.string('text')
+      table.integer('post_id').unsigned().references('posts.id').onDelete('CASCADE')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

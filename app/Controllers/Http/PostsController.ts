@@ -11,7 +11,7 @@ export default class PostsController {
     }
 
     public async index({response}: HttpContextContract) {
-        const posts = await Post.all()
+        const posts = await Post.query().preload('comments')
         response.status(200)
         return {
             data: posts
@@ -20,6 +20,7 @@ export default class PostsController {
 
     public async show({params, response}: HttpContextContract) {
         const post = await Post.findOrFail(params.id)
+        await post.load('comments')
         response.status(200)
         return {
             data: post
